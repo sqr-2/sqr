@@ -1,14 +1,12 @@
-import Head from "next/head";
 import React from "react";
 import { Button, Input } from "ui";
-import { PaletteEntropy } from "sqr2";
+import { Palette, PaletteEntropy, Size, SQR } from "sqr2";
 import { Layout } from "src/components/Layout";
 import { chunk } from "lodash";
-import c from "clsx";
 
 const toBitArray = (a: Uint8Array) => {
   return a.reduce(
-    (prev, curr) => [...prev, ...curr.toString(2).padStart(8, "0")],
+    (prev, curr) => [...prev, ...[curr.toString(2).padStart(8, "0")]],
     []
   );
 };
@@ -34,30 +32,19 @@ export default function Home() {
     setTimeout(play, 1000);
   };
 
+  const sqr = new SQR({
+    size: Size.V,
+    data: uint8Array,
+    palette: Palette.HEX,
+  });
+
+  console.log(sqr.generateBook(), sqr.frameCount);
+
   return (
     <Layout>
       <div className="grid grid-flow-col grid-rows-3 gap-4">
         <div className="bg-red row-span-3">
-          <div className="grid h-[4cm] w-[4cm] grid-cols-5 grid-rows-5 bg-black">
-            {frameMatrix.map((r, i) => (
-              <>
-                {r.map((val, j) => (
-                  <>
-                    <div
-                      className={c(
-                        val === "1" ? "bg-white" : "bg-black",
-                        "text-magenta"
-                      )}
-                    ></div>
-                  </>
-                ))}
-                <div className={i === 0 && "bg-white"} />
-              </>
-            ))}
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div className={c([0, 4].includes(i) && "bg-white")} />
-            ))}
-          </div>
+          {/*<SQR2 sqr={hew SQR}*/}
 
           <div className={"mt-4"}>
             <Button onClick={play}>play</Button>
