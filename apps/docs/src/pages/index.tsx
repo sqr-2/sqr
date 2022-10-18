@@ -6,7 +6,7 @@ import { chunk } from "lodash";
 
 const toBitArray = (a: Uint8Array) => {
   return a.reduce(
-    (prev, curr) => [...prev, ...[curr.toString(2).padStart(8, "0")]],
+    (prev, curr) => [...prev, ...curr.toString(2).padStart(8, "0")],
     []
   );
 };
@@ -38,7 +38,7 @@ export default function Home() {
     palette: Palette.HEX,
   });
 
-  console.log(sqr.generateBook(), sqr.frameCount);
+  console.log(sqr.generateBook());
 
   return (
     <Layout>

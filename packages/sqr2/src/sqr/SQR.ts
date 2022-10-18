@@ -107,20 +107,28 @@ export class SQR {
   generateBook() {
     const paletteEntropy = PaletteEntropy[this.palette];
 
+    const dataCellsOrder = this.size - 1;
+
     // N*N matrix cells count
-    const frameDataCellsCount = Math.pow(this.size - 1, 2);
+    const frameDataCellsCount = Math.pow(dataCellsOrder, 2);
 
     // 3 data-cells reserved for positioning
     const framePageCellsCount = 2 * this.size - 4;
 
     const frames = chunk(this.coloredCells, frameDataCellsCount);
-    const pagedFrames = frames.map((f, pageNumber) => {
-      const pageBits = pageNumber
-        .toString(paletteEntropy)
-        .padStart(framePageCellsCount);
-      console.log(pageBits, "pageBits");
-      // const page = parseInt(pageBits.join("").padStart(paletteEntropy), 2);
-      return f;
+    const pagedFrames = frames.map((rowFrame: Colors[], frameIndex) => {
+      const paletteRadix = Math.pow(2, paletteEntropy);
+      const pageBits = frameIndex
+        .toString(paletteRadix)
+        .padStart(framePageCellsCount, "0");
+
+      console.log(chunk(rowFrame, dataCellsOrder), "chunked");
+
+      const pagedFrame = [...new Array(this.size)].map(_, (i) => {
+        return 2;
+      });
+
+      return pagedFrame;
     });
     return frames;
   }
